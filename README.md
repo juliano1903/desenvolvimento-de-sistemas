@@ -1,5 +1,7 @@
 Projeto criado utilizando:
 
-Spring boot /n
+Spring boot
+
 H2 database
+
 Bootstrap
