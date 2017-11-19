@@ -1,6 +1,6 @@
 package br.com.leilaoeletronico.model;
 
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -21,24 +22,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Lance {
+public class Item {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lance_seq")
-	@SequenceGenerator(sequenceName = "lance_id_seq", allocationSize = 1, name = "lance_seq")
-	private Long idLance;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_seq" )
+	@SequenceGenerator(sequenceName = "item_id_seq", allocationSize = 1, name ="item_seq")
+	private Long idItem;
 	
-	private Date dataHora;
+	@ManyToOne
+	@JoinColumn(name="id_categoria_item")
+	private CategoriaItem categoria;
 	
-	private Long valor;
+	private String nome;
+	
+	private String descricao;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "itens")
+	private List<Lote> lotes;
 
-	private String valorString;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_leilao")
-	private Leilao leilao;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
 }

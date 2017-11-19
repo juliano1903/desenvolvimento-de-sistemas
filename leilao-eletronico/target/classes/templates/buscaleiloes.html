@@ -1,27 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>ListaVIP</title>
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	</head>
-	<body>
-		<div class="container" >
-			<div class="jumbotron" align="center" style="margin-top: 50px;">
-				<h3>Seja bem vindo ao Sistema de Leilões eletrônico</h3>
-				<div align="center">
-					<div class="row form-group">
-						<a href="listaconvidados" class="btn btn-lg btn-primary">Clique aqui para ver os leiões em andamento</a>
-					</div>
-					<div class="row form-group">
-						<a href="listaconvidados" class="btn btn-lg btn-primary">Clique aqui para criar um leilão</a>
-					</div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ListaVIP</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron" align="center" style="margin-top: 50px;">
+			<h3>Leiões em andamento</h3>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Natureza</th>
+						<th>Lances</th>
+						<th>Valor(R$)</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tr th:each="leilao : ${leiloes}">
+					<td><span th:text="${leilao.lote.descricao}"></span></td>
+					<td><span th:text="${leilao.naturezaLeilao.nome}"></span></td>
+					<td><span th:text="${leilao.tipoLance.nome}"></span></td>
+					<td><span th:text="${leilao.valorString}"></span></td>
+					<td>
+						<button class="btn btn-primary"
+							th:attr="data-whatever=''+${leilao.idLeilao}" data-toggle="modal"
+							data-target="#exampleModal">Realizar Lance</button>
+						<button class="btn btn-primary"
+							th:attr="data-whatever=''+${leilao.idLeilao}" data-toggle="modal"
+							data-target="#lancesModal">Consultar Lances</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Valor do lance</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="efetuarLance">
+						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">Valor:</label>
+							<input type="text" name="valorString" class="form-control"
+								id="recipient-name"></input> <input type="text" name="idLeilao"
+								class="form-control" id="id-leilao"></input>
+						</div>
+						<button type="submit" class="btn btn-primary">Send
+							message</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
-	    
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	    <script src="bootstrap/js/bootstrap.min.js"></script>
-	
-	</body>
+	</div>
+
+	<div class="modal fade" id="lancesModal" tabindex="-1" role="dialog"
+		aria-labelledby="lancesModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="lancesModalLabel">Valor do lance</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table id="table-lances" class="table table-striped">
+						<thead>
+							<tr>
+								<th>Valor</th>
+								<th>Data</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+	<script type="text/javascript">
+	    	$('#exampleModal').on('show.bs.modal', function (event) {
+	    	  var button = $(event.relatedTarget) // Button that triggered the modal
+	    	  var recipient = button.data('whatever') // Extract info from data-* attributes
+	    	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	    	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	    	  var modal = $(this)
+	    	  modal.find('#id-leilao').val(recipient)
+	    	})
+	    	
+	    	$('#lancesModal').on('show.bs.modal', function (event) {
+	    	  var button = $(event.relatedTarget) // Button that triggered the modal
+	    	  var recipient = button.data('whatever') // Extract info from data-* attributes
+	    	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	    	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	    	  var modal = $(this)
+	    	  modal.find('#id-leilao').val(recipient)
+	    	  
+	    	  var jqxhr = $.get( "/lance/"+recipient, function(data) {
+				$('#table-lances tbody tr').remove();
+	    		  $.each( data, function( key, value ) {
+	    			  $('#table-lances tbody').append('<tr><td>'+value.valorString+'</td><td>'+value.valorString+'</td></tr>')
+	    			})
+	    		})
+    		  .done(function() {
+    		  })
+    		  .fail(function() {
+    		  })
+    		  .always(function() {
+    		  });
+	    	})
+	    	
+	    	$(document).ready(function(){
+	    	  $("#recipient-name").maskMoney();
+	    	});
+	    </script>
+
+</body>
 </html>
