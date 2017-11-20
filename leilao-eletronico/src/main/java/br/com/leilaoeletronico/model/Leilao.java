@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,4 +51,10 @@ public class Leilao {
 	private Long valor;
 	
 	private String valorString;
+	
+	@Transient
+	private String lanceVencedor;
+	
+	@Transient
+	public boolean finalizado;
 }

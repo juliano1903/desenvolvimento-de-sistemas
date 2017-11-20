@@ -54,17 +54,15 @@ public class LoteController {
 							.categoria(new CategoriaItem().builder().idCategoriaItem(idCategoria).build())
 							.build());
 		
-		//if(descricao != null)
-		//throw new RuntimeException("teste");
-		
 		return "redirect:crialote";
 		
 	}
 
 	@RequestMapping("salvarlote")
-	public String salvarLote(@RequestParam("idItem") List<Long> idsItens) {
+	public String salvarLote(@RequestParam("idItem") List<Long> idsItens, 
+								@RequestParam("nome") String nome) {
 		
-		Lote lote = loteService.save(new Lote().builder().descricao("teste").build());
+		Lote lote = loteService.save(new Lote().builder().descricao(nome).build());
 		lote.setItens(new ArrayList<Item>());
 		
 		for(Long idItem : idsItens) {

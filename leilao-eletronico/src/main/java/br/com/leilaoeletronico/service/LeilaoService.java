@@ -1,5 +1,7 @@
 package br.com.leilaoeletronico.service;
 
+import java.util.Date;
+
 import org.hibernate.secure.spi.PermissibleAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +25,9 @@ public class LeilaoService {
 
 	public Leilao findByIdLeilao(Long idLeilao) {
 		return leilaoRepository.findByIdLeilao(idLeilao);
+	}
+	
+	public boolean isFinalizado(Leilao leilao) {
+		return leilao.getDataFim().getTime() < new Date().getTime();
 	}
 }

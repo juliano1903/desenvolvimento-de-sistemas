@@ -8,6 +8,7 @@ import br.com.leilaoeletronico.model.Leilao;
 
 public interface LanceRepository extends CrudRepository<Lance, Long>  {
 
-	@Query("select l from Lance l where l.leilao = ?1")
-	Iterable<Lance> findByIdLeilao(Leilao leilao);
+	@Query("select l from Lance l where l.leilao.idLeilao = ?1")
+	Iterable<Lance> findByIdLeilao(Long idLeilao);
+
 }

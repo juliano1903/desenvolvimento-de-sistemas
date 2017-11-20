@@ -50,6 +50,11 @@ public class LeilaoController {
 	@RequestMapping("/buscaleiloes")
 	public String buscaLeiloes(Model model){
 		Iterable<Leilao> leiloes = leilaoService.findAll();
+		
+    	for (Leilao leilao : leiloes) {
+    		leilao.setFinalizado(leilaoService.isFinalizado(leilao));
+    	}
+
 		model.addAttribute("leiloes", leiloes);
 		return "buscaLeiloes";
 	}
