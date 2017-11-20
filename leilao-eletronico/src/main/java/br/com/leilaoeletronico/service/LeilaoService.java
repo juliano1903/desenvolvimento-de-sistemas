@@ -1,5 +1,6 @@
 package br.com.leilaoeletronico.service;
 
+import org.hibernate.secure.spi.PermissibleAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,9 @@ public class LeilaoService {
 
 	public Iterable<Leilao> findAll() {
 		return leilaoRepository.findAll();
+	}
+
+	public Leilao findByIdLeilao(Long idLeilao) {
+		return leilaoRepository.findByIdLeilao(idLeilao);
 	}
 }

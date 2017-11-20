@@ -6,4 +6,6 @@ import br.com.leilaoeletronico.model.Leilao;
 
 public interface LeilaoRepository extends CrudRepository<Leilao, Long>{
 
+	Leilao findByIdLeilao(Long idLeilao);
+
 }

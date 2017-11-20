@@ -54,8 +54,8 @@ public class LoteController {
 							.categoria(new CategoriaItem().builder().idCategoriaItem(idCategoria).build())
 							.build());
 		
-		if(descricao != null)
-		throw new RuntimeException("teste");
+		//if(descricao != null)
+		//throw new RuntimeException("teste");
 		
 		return "redirect:crialote";
 		

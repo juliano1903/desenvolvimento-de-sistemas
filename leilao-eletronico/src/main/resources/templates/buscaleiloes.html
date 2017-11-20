@@ -24,13 +24,21 @@
 					<td><span th:text="${leilao.naturezaLeilao.nome}"></span></td>
 					<td><span th:text="${leilao.tipoLance.nome}"></span></td>
 					<td><span th:text="${leilao.valorString}"></span></td>
-					<td>
+					<td th:switch="${leilao.tipoLance.idTipoLance}">
+						<button class="btn btn-primary"
+							th:attr="data-whatever=''+${leilao.idLeilao}" data-toggle="modal"
+							data-target="#informacoesModal">Consultar Informações</button>
+							
 						<button class="btn btn-primary"
 							th:attr="data-whatever=''+${leilao.idLeilao}" data-toggle="modal"
 							data-target="#exampleModal">Realizar Lance</button>
-						<button class="btn btn-primary"
+							
+						<button th:case="1" class="btn btn-primary"
 							th:attr="data-whatever=''+${leilao.idLeilao}" data-toggle="modal"
 							data-target="#lancesModal">Consultar Lances</button>
+						<button th:case="2" class="btn btn-primary"
+							th:attr="data-whatever=''+${leilao.idLeilao}" data-toggle="modal"
+							data-target="#lancesModal" disabled="disabled">Consultar Lances</button>
 					</td>
 				</tr>
 			</table>
@@ -53,11 +61,11 @@
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Valor:</label>
 							<input type="text" name="valorString" class="form-control"
-								id="recipient-name"></input> <input type="text" name="idLeilao"
+								id="recipient-name"></input>
+							<input type="hidden" name="idLeilao"
 								class="form-control" id="id-leilao"></input>
 						</div>
-						<button type="submit" class="btn btn-primary">Send
-							message</button>
+						<button type="submit" class="btn btn-primary">Confirmar lance</button>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -73,7 +81,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="lancesModalLabel">Valor do lance</h5>
+					<h5 class="modal-title" id="lancesModalLabel">Lances efetuados</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -98,6 +106,33 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal fade" id="informacoesModal" tabindex="-1" role="dialog"
+		aria-labelledby="lancesModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="informacoesModalLabel">Informações</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+					<label class="control-label col-sm-2">Natureza:</label> 
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<form action="index">
+		<button class="btn">Voltar</button>
+	</form>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -125,9 +160,29 @@
 	    	  var jqxhr = $.get( "/lance/"+recipient, function(data) {
 				$('#table-lances tbody tr').remove();
 	    		  $.each( data, function( key, value ) {
-	    			  $('#table-lances tbody').append('<tr><td>'+value.valorString+'</td><td>'+value.valorString+'</td></tr>')
+	    			  var date = new Date(value.dataHora);
+	    			  $('#table-lances tbody').append('<tr><td>'+value.valorString+'</td><td>'+date.toLocaleString()+'</td></tr>')
 	    			})
 	    		})
+    		  .done(function() {
+    		  })
+    		  .fail(function() {
+    		  })
+    		  .always(function() {
+    		  });
+	    	})
+	    	
+	    	$('#informacoesModal').on('show.bs.modal', function (event) {
+	    	  var button = $(event.relatedTarget) // Button that triggered the modal
+	    	  var recipient = button.data('whatever') // Extract info from data-* attributes
+	    	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	    	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+	    	  var modal = $(this)
+	    	  modal.find('#id-leilao').val(recipient)
+	    	  
+	    	  var jqxhr = $.get( "leilao/informacoes/"+recipient, function(data) {
+		    	 
+	    	  })  
     		  .done(function() {
     		  })
     		  .fail(function() {

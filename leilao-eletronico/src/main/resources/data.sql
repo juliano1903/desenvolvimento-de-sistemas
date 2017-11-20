@@ -27,11 +27,23 @@ insert into item values (item_id_seq.nextval, 'Mouse gamer XYZ', 'Mouse', 1);
 
 insert into item values (item_id_seq.nextval, 'Teclado gamer XYZ','Teclado', 1);
 
+insert into item values (item_id_seq.nextval, 'Camaro 1979', 'Camaro', 4);
+
+insert into item values (item_id_seq.nextval, 'Ford antigo','Ford Modelo T', 4);
+
+insert into item values (item_id_seq.nextval, 'Motor V8 small block 5.4 de 250 cv brutos e, de 1965 em diante, um big block de 425 cv', 'Chevrolet Corvette', 4);
+
+insert into item values (item_id_seq.nextval, 'SVT Cobra e seu V8 supercharged de 4,6 litros e 390 cv','Ford Mustang', 4);
+
 insert into lote values (lote_id_seq.nextval, 'Lote de Itens e Informática');
+
+insert into lote values (lote_id_seq.nextval, 'Lote de Carros Clássicos');
 
 insert into usuario values (usuario_id_seq.nextval, '01386283002', 'llara.juliano@gmail.com', 'Juliano', '1');
 
 insert into leilao values (leilao_id_seq.nextval, sysdate, sysdate, 123456, '123,456', 1, 1, 1, 1);
+
+insert into leilao values (leilao_id_seq.nextval, sysdate, sysdate, 10456, '10,456', 2, 2, 2, 1);
 
 insert into lance values (lance_id_seq.nextval, sysdate, 123456, '123.456', 1, 1);
 

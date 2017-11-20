@@ -15,7 +15,7 @@ import br.com.leilaoeletronico.service.LanceService;
 
 @RestController
 @RequestMapping("lance")
-public class ApiRestController {
+public class LanceApiRestController {
 	
 	@Autowired
 	private LanceService lanceService;
