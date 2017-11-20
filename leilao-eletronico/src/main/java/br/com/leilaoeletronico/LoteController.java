@@ -27,9 +27,6 @@ public class LoteController {
 	private CategoriaItemService categoriaItemService;
 	
 	@Autowired
-	private LeilaoService leilaoService; 
-	
-	@Autowired
 	private ItemService itemService;
 	
 	@Autowired
